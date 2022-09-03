@@ -1,0 +1,48 @@
+import sys, time
+import sevseg
+
+try:
+    while True:
+        print('\n' * 60)
+
+        # geting the current time from the computer's clock
+        currentTime = time.localtime()
+        hours = str(currentTime.tm_hour % 12)
+
+        if hours == '0':
+            hours = '12'
+
+        minutes = str(currentTime.tm_min)
+        seconds = str(currentTime.tm_sec)
+
+        # geting the digit string from the sevseg module
+
+        hDigits = sevseg.getSevSegStr(hours, 2)
+        hTopRow, hMiddleRow, hBottomRow = hDigits.splitlines()
+
+        mDigits = sevseg.getSevSegStr(minutes, 2)
+        mTopRow, mMiddleRow, mBottomRow = mDigits.splitlines()
+
+        sDigits = sevseg.getSevSegStr(seconds, 2)
+        sTopRow, sMiddleRow, sBottomRow = sDigits.splitlines()
+
+        # DISPLAY THE DIGITS
+
+        print(hTopRow +    '   '    + mTopRow +    '      '      + sTopRow)
+        print(hMiddleRow + ' * ' + mMiddleRow + '  *   ' + sMiddleRow)
+        print(hBottomRow + ' * ' + mBottomRow + '  *   '  + sBottomRow)
+        print()
+        print('Press Ctrl-c to quit')
+
+        # keep looping untill the second changes
+
+        while True:
+            time.sleep(0.01)
+            if time.localtime().tm_sec != currentTime.tm_sec:
+                break
+
+
+
+except KeyboardInterrupt:
+    print('Digital Clock, by DEELIP KUMAR')
+    sys.exit()
